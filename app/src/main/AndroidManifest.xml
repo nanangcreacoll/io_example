@@ -15,13 +15,24 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Io_example">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".GpioActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Io_example">
+        </activity>
+        <activity android:name=".I2cActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Io_example">
+        </activity>
+        <activity android:name=".SerialActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Io_example">
         </activity>
     </application>
 

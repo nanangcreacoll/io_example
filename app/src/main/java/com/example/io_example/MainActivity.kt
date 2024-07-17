@@ -1,47 +1,34 @@
 package com.example.io_example
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.io_example.ui.theme.Io_exampleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            Io_exampleTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.activity_main)
+
+        val gpioButton: Button = findViewById(R.id.gpio_button)
+        val i2cButton: Button = findViewById(R.id.i2c_button)
+        val serialButton: Button = findViewById(R.id.serial_button)
+
+        gpioButton.setOnClickListener {
+            val intent = Intent(this, GpioActivity::class.java)
+            startActivity(intent)
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+        i2cButton.setOnClickListener {
+            val intent = Intent(this, I2cActivity::class.java)
+            startActivity(intent)
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Io_exampleTheme {
-        Greeting("Android")
+        serialButton.setOnClickListener {
+            val intent = Intent(this, SerialActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
