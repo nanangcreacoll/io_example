@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".GpioActivity">
+    tools:context=".SerialActivity">
 
     <View
         android:layout_width="0dp"
@@ -13,10 +13,10 @@
         android:layout_weight="0.01" />
 
     <TextView
-        android:id="@+id/gpioTextView"
+        android:id="@+id/serialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gpio"
+        android:text="@string/serial"
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal" />
@@ -26,15 +26,45 @@
         android:layout_height="0dp"
         android:layout_weight="0.001" />
 
-    <Button
-        android:id="@+id/whiteLedButton"
-        android:layout_width="220dp"
+    <EditText
+        android:id="@+id/input1Number"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:background="#787878"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/input_number"
+        android:inputType="number"
+        android:textSize="24sp"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.001" />
+
+    <EditText
+        android:id="@+id/input2Number"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/input_number"
+        android:inputType="number"
+        android:textSize="24sp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.001" />
+
+    <Button
+        android:id="@+id/serialSendButton"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:background="#B5FBA7"
         android:fontFamily="sans-serif"
-        android:text="@string/white_led_button"
+        android:text="@string/serial_send"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -43,37 +73,19 @@
         android:layout_height="0dp"
         android:layout_weight="0.001" />
 
-    <Button
-        android:id="@+id/greenLedButton"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:background="#6FFF52"
-        android:fontFamily="sans-serif"
-        android:text="@string/green_led_button"
-        android:textAlignment="center"
+    <TextView
+        android:id="@+id/serialResultView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/serialValue"
         android:textColor="#000000"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.001" />
-
-    <Button
-        android:id="@+id/redLedButton"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:background="#FD6666"
-        android:fontFamily="sans-serif"
-        android:text="@string/red_led_button"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="45sp"
+        android:textStyle="bold|italic"
+        android:typeface="normal" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="0.01" />
+
 </LinearLayout>

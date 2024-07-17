@@ -3,4 +3,13 @@
     <string name="gpio">GPIO</string>
     <string name="i2c">I2C</string>
     <string name="serial">SERIAL</string>
+    <string name="white_led_button">WHITE LED</string>
+    <string name="green_led_button">GREEN LED</string>
+    <string name="red_led_button">RED LED</string>
+    <string name="i2c_write_button">Write</string>
+    <string name="i2c_read_button">Read</string>
+    <string name="i2cValue">0x00 (initial)</string>
+    <string name="input_number">Input Number</string>
+    <string name="serial_send">SEND</string>
+    <string name="serialValue">0 (Initial)</string>
 </resources>

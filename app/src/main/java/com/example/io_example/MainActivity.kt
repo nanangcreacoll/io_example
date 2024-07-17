@@ -12,9 +12,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val gpioButton: Button = findViewById(R.id.gpio_button)
-        val i2cButton: Button = findViewById(R.id.i2c_button)
-        val serialButton: Button = findViewById(R.id.serial_button)
+        val gpioButton: Button = findViewById(R.id.gpioButton)
+        val i2cButton: Button = findViewById(R.id.i2cButton)
+        val serialButton: Button = findViewById(R.id.serialButton)
 
         gpioButton.setOnClickListener {
             val intent = Intent(this, GpioActivity::class.java)

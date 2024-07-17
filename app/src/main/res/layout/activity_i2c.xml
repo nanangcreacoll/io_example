@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".GpioActivity">
+    tools:context=".I2cActivity">
 
     <View
         android:layout_width="0dp"
@@ -13,10 +13,10 @@
         android:layout_weight="0.01" />
 
     <TextView
-        android:id="@+id/gpioTextView"
+        android:id="@+id/i2cTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gpio"
+        android:text="@string/i2c"
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="normal" />
@@ -27,14 +27,13 @@
         android:layout_weight="0.001" />
 
     <Button
-        android:id="@+id/whiteLedButton"
+        android:id="@+id/i2cWriteButton"
         android:layout_width="220dp"
         android:layout_height="70dp"
-        android:background="#787878"
+        android:background="#B5FBA7"
         android:fontFamily="sans-serif"
-        android:text="@string/white_led_button"
+        android:text="@string/i2c_write_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -44,14 +43,13 @@
         android:layout_weight="0.001" />
 
     <Button
-        android:id="@+id/greenLedButton"
+        android:id="@+id/i2cReadButton"
         android:layout_width="220dp"
         android:layout_height="70dp"
-        android:background="#6FFF52"
+        android:background="#B5FBA7"
         android:fontFamily="sans-serif"
-        android:text="@string/green_led_button"
+        android:text="@string/i2c_read_button"
         android:textAlignment="center"
-        android:textColor="#000000"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -60,20 +58,20 @@
         android:layout_height="0dp"
         android:layout_weight="0.001" />
 
-    <Button
-        android:id="@+id/redLedButton"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:background="#FD6666"
-        android:fontFamily="sans-serif"
-        android:text="@string/red_led_button"
-        android:textAlignment="center"
+    <TextView
+        android:id="@+id/i2cValueView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i2cValue"
         android:textColor="#000000"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="45sp"
+        android:textStyle="bold|italic"
+        android:typeface="normal" />
+
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="0.01" />
+
 </LinearLayout>
