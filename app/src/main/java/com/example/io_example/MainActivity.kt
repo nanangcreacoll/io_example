@@ -7,14 +7,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 
 class MainActivity : ComponentActivity() {
+    private lateinit var gpioButton: Button
+    private lateinit var i2cButton: Button
+    private lateinit var serialButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val gpioButton: Button = findViewById(R.id.gpioButton)
-        val i2cButton: Button = findViewById(R.id.i2cButton)
-        val serialButton: Button = findViewById(R.id.serialButton)
+        gpioButton = findViewById(R.id.gpioButton)
+        i2cButton = findViewById(R.id.i2cButton)
+        serialButton = findViewById(R.id.serialButton)
 
         gpioButton.setOnClickListener {
             val intent = Intent(this, GpioActivity::class.java)
