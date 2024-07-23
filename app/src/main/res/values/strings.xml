@@ -12,4 +12,7 @@
     <string name="input_number">Input Number</string>
     <string name="serial_send">SEND</string>
     <string name="serialValue">0 (Initial)</string>
+    <string name="bluetooth">BLUETOOTH</string>
+    <string name="bluetoothValue">[0]</string>
+    <string name="bluetoothStartButton">Start Scan</string>
 </resources>

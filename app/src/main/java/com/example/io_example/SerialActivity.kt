@@ -7,12 +7,17 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import com.example.io_example.io.Serial
+import com.example.io_example.controller.Serial
 import java.io.IOException
 import java.security.InvalidParameterException
 
 class SerialActivity : ComponentActivity() {
-    private val serialPortPath = "/dev/ttyACM0"
+    companion object {
+        private const val TAG = "SerialActivity"
+    }
+
+//    private val serialPortPath = "/dev/ttyACM0" // arduino usb
+    private val serialPortPath = "/dev/ttyS3" // fatmor serial ttyS3
     private val baudRate = 115200
     private lateinit var serialHelper: Serial
 
@@ -57,12 +62,16 @@ class SerialActivity : ComponentActivity() {
         if (serial.isOpen) {
             val sendData = "$input1 $input2"
             serial.sendTxt("$sendData\r\n")
-            Log.d("SerialData", "Sent data: $sendData, with CRLF")
-            while (serialHelper.data.isEmpty()) {}
-            result.text = serialHelper.data
+            Log.d(TAG, "Sent data: $sendData, with CRLF")
+            while (serialHelper.data.isEmpty()) {
+                Thread.sleep(10)
+            }
+            runOnUiThread {
+                result.text = serialHelper.data
+            }
             serialHelper.data = ""
         } else {
-            Log.e("SerialError", "Serial port is not open")
+            Log.e(TAG, "Serial port is not open")
         }
     }
 }

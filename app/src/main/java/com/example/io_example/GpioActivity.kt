@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import com.example.io_example.io.Gpio
+import com.example.io_example.controller.Gpio
 
 class GpioActivity : ComponentActivity() {
     private val whiteLedPin = 11 // GPIO0_B3

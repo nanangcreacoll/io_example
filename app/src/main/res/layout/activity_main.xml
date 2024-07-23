@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/gpioButton"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="70dp"
         android:background="#B5FBA7"
         android:fontFamily="sans-serif"
@@ -47,7 +47,7 @@
 
     <Button
         android:id="@+id/i2cButton"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="70dp"
         android:background="#B5FBA7"
         android:fontFamily="sans-serif"
@@ -63,11 +63,28 @@
 
     <Button
         android:id="@+id/serialButton"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="70dp"
         android:background="#B5FBA7"
         android:fontFamily="sans-serif"
         android:text="@string/serial"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        tools:ignore="TextSizeCheck" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.001" />
+
+    <Button
+        android:id="@+id/bluetoothButton"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:background="#B5FBA7"
+        android:fontFamily="sans-serif"
+        android:text="@string/bluetooth"
         android:textAlignment="center"
         android:textSize="28sp"
         android:textStyle="bold"

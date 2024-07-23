@@ -1,9 +1,13 @@
-package com.example.io_example.io
+package com.example.io_example.controller
 
 import android.util.Log
 import java.io.File
 
 class Gpio(private val pin: Int, direction: String = "out"): Command() {
+    companion object {
+        private const val TAG = "Gpio"
+    }
+
     private val pinPath: String = "/sys/class/gpio/gpio$pin"
     private val directionPath: String = "$pinPath/direction"
     private val valuePath: String = "$pinPath/value"

@@ -1,11 +1,12 @@
 package com.example.io_example
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import com.example.io_example.io.I2c
+import com.example.io_example.controller.I2c
 
 class I2cActivity : ComponentActivity() {
     private val i2cBus: Int = 4
@@ -18,6 +19,8 @@ class I2cActivity : ComponentActivity() {
     private lateinit var i2cReadButton: Button
     private lateinit var i2cValue: TextView
 
+    @OptIn(ExperimentalStdlibApi::class)
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,17 +31,36 @@ class I2cActivity : ComponentActivity() {
         i2cValue = findViewById(R.id.i2cValueView)
 
         i2cWriteButton.setOnClickListener {
+            runOnUiThread {
+                i2cValue.text = "Writing: 0x${value.toHexString()} ..."
+            }
+
             if (value < 0xff) {
                 i2c.write(value)
+                runOnUiThread {
+                    i2cValue.text = "Written: 0x${value.toHexString()}"
+                }
                 value++
             } else {
                 value = 0x00
+                runOnUiThread {
+                    i2cValue.text = "Written: 0x${value.toHexString()}"
+                }
             }
         }
 
         i2cReadButton.setOnClickListener {
+            runOnUiThread {
+                i2cValue.text = "Reading..."
+            }
             val readValue = i2c.read()
-            i2cValue.text = readValue
+            runOnUiThread {
+                i2cValue.text = readValue
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
