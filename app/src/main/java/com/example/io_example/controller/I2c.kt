@@ -26,7 +26,7 @@ class I2c (bus: Int, address: Byte): Command() {
 
     fun read(): String {
         var result: String = readRootCommand(this.readCommand)
-        while (true) {
+        while (result == "") {
             Thread.sleep(10)
             result = readRootCommand(this.readCommand)
         }
