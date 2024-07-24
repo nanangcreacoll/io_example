@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".I2cActivity">
+    tools:context=".activity.I2cActivity">
 
     <View
         android:layout_width="0dp"

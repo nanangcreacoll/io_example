@@ -1,10 +1,12 @@
-package com.example.io_example
+package com.example.io_example.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.example.io_example.R
+import com.example.io_example.service.RestartService
 
 class MainActivity : ComponentActivity() {
     private lateinit var gpioButton: Button
@@ -41,5 +43,12 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, BluetoothActivity::class.java)
             startActivity(intent)
         }
+
+        val serviceIntent = Intent(this, RestartService::class.java)
+        startService(serviceIntent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

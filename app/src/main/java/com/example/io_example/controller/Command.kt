@@ -53,6 +53,7 @@ open class Command {
             }
             process.destroy()
 
+            Log.d(TAG, "Executed root command: $execCommand")
             result.toString()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to read root command: $execCommand", e)

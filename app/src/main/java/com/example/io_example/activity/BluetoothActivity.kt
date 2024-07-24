@@ -1,4 +1,4 @@
-package com.example.io_example
+package com.example.io_example.activity
 
 import android.os.Build
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
+import com.example.io_example.Bluetooth
+import com.example.io_example.R
 
 class BluetoothActivity : ComponentActivity() {
 

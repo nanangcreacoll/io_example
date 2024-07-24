@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -22,31 +23,43 @@
         android:theme="@style/Theme.Io_example"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Io_example">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GpioActivity"
+        <activity android:name=".activity.GpioActivity"
             android:exported="true"
             android:theme="@style/Theme.Io_example">
         </activity>
-        <activity android:name=".I2cActivity"
+        <activity android:name=".activity.I2cActivity"
             android:exported="true"
             android:theme="@style/Theme.Io_example">
         </activity>
-        <activity android:name=".SerialActivity"
+        <activity android:name=".activity.SerialActivity"
             android:exported="true"
             android:theme="@style/Theme.Io_example">
         </activity>
-        <activity android:name=".BluetoothActivity"
+        <activity android:name=".activity.BluetoothActivity"
             android:exported="true"
             android:theme="@style/Theme.Io_example">
         </activity>
+        <service android:name=".service.RestartService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.ACCESS_SUPERUSER">
+        </service>
+        <receiver android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

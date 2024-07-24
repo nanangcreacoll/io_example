@@ -1,9 +1,10 @@
-package com.example.io_example
+package com.example.io_example.activity
 
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.example.io_example.R
 import com.example.io_example.controller.Gpio
 
 class GpioActivity : ComponentActivity() {

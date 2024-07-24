@@ -1,4 +1,4 @@
-package com.example.io_example
+package com.example.io_example.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.example.io_example.R
 import com.example.io_example.controller.I2c
 
 class I2cActivity : ComponentActivity() {

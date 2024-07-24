@@ -1,4 +1,4 @@
-package com.example.io_example
+package com.example.io_example.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import com.example.io_example.R
 import com.example.io_example.controller.Serial
 import java.io.IOException
 import java.security.InvalidParameterException
