@@ -2,6 +2,7 @@ package com.example.io_example.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,10 @@ import com.example.io_example.R
 import com.example.io_example.service.RestartService
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private lateinit var gpioButton: Button
     private lateinit var i2cButton: Button
     private lateinit var serialButton: Button
@@ -43,12 +48,12 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, BluetoothActivity::class.java)
             startActivity(intent)
         }
-
-        val serviceIntent = Intent(this, RestartService::class.java)
-        startService(serviceIntent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        val serviceIntent = Intent(this, RestartService::class.java)
+        stopService(serviceIntent)
+        startService(serviceIntent)
     }
 }

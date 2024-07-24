@@ -14,6 +14,8 @@ class RestartService : Service() {
         Log.d(TAG, "RestartService started")
 
         if (!isActivityRunning(MainActivity::class.java)) {
+            Log.d(TAG, "Starting MainActivity in 3 seconds")
+            Thread.sleep(3000)
             val activityIntent = Intent(this, MainActivity::class.java)
             activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(activityIntent)
@@ -31,9 +33,7 @@ class RestartService : Service() {
         }
         return false
     }
-
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
-
 }

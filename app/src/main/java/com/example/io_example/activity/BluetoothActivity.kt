@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import com.example.io_example.Bluetooth
 import com.example.io_example.R
@@ -22,6 +23,7 @@ class BluetoothActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_bluetooth)
 
         bluetoothStartButton = findViewById(R.id.bluetoothStartButton)

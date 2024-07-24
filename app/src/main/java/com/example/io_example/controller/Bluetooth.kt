@@ -71,10 +71,11 @@ class Bluetooth(
             }
             Log.d(TAG, "Service discovered")
             gatt!!.setCharacteristicNotification(bleCharacteristic, true)
+
             bleDescriptor = bleCharacteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
             bleDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-            val result = gatt.writeDescriptor(bleDescriptor)
-            Log.d(TAG, result.toString())
+
+            gatt.writeDescriptor(bleDescriptor)
 
             super.onServicesDiscovered(gatt, status)
         }
