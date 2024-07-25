@@ -44,12 +44,12 @@
         android:layout_weight="0.001" />
 
     <TextView
-        android:id="@+id/bluetoothValueView"
+        android:id="@+id/bluetoothDeviceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bluetoothValue"
+        android:text="@string/bluetoothDeviceValue"
         android:textColor="#000000"
-        android:textSize="45sp"
+        android:textSize="35sp"
         android:textStyle="bold|italic"
         android:typeface="normal" />
 

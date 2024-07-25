@@ -18,28 +18,28 @@ import java.util.*
 
 @SuppressLint("MissingPermission")
 class Bluetooth(
-    private val context: Context,
+    private val activity: Activity,
     private val bleList: List<List<String>>,
-    private val bleCharacteristicValue: (String) -> Unit
+    private val bleCharacteristicValue: (String, String) -> Unit
 ) {
 
-    private var manager: BluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    private var manager: BluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     private var gatt: BluetoothGatt? = null
 
     init {
         if (!manager.adapter.isEnabled) {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            context.startActivity(enableBtIntent)
+            activity.startActivity(enableBtIntent)
         }
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                context as Activity,
+                activity,
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
-                ), 0
+                ), PERMISSION_REQUEST_CODE
             )
         }
     }
@@ -47,7 +47,19 @@ class Bluetooth(
     @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.S)
     fun startScanning() {
-        manager.adapter.bluetoothLeScanner.startScan(BleScanCallback())
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            manager.adapter.bluetoothLeScanner.startScan(BleScanCallback())
+        } else {
+            Log.d(TAG, "Permissions not granted")
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), PERMISSION_REQUEST_CODE
+            )
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -56,7 +68,7 @@ class Bluetooth(
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             for (device in bleList) {
                 if (result?.device?.address == device[0]) {
-                    gatt = result.device.connectGatt(context, false, BleGattCallback())
+                    gatt = result.device.connectGatt(activity, false, BleGattCallback())
                     break
                 }
             }
@@ -86,16 +98,29 @@ class Bluetooth(
                     bleCharacteristic = this@Bluetooth.gatt
                         ?.getService(UUID.fromString(device[1]))
                         ?.getCharacteristic(UUID.fromString(device[2]))
-                        ?: break
-                    Log.d(TAG, "Characteristic discovered for device: ${gatt.device?.address}")
+                        ?: continue
+                    Log.d(TAG, "Service discovered for device: ${gatt.device?.address}")
 
                     gatt.setCharacteristicNotification(bleCharacteristic, true)
                     bleDescriptor = bleCharacteristic.getDescriptor(UUID.fromString(device[3]))
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        bleDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                        gatt.writeDescriptor(bleDescriptor)
+                        if (bleCharacteristic.properties and BluetoothGattCharacteristic.PROPERTY_INDICATE != 0) {
+                            Log.d(TAG, "Property indicate")
+                            bleDescriptor.value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
+                            gatt.writeDescriptor(bleDescriptor)
+                        } else if (bleCharacteristic.properties and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0) {
+                            Log.d(TAG, "Property notify")
+                            bleDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                            gatt.writeDescriptor(bleDescriptor)
+                        }
                     } else {
-                        gatt.writeDescriptor(bleDescriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+                        if (bleCharacteristic.properties and BluetoothGattCharacteristic.PROPERTY_INDICATE != 0) {
+                            Log.d(TAG, "Property indicate")
+                            gatt.writeDescriptor(bleDescriptor, BluetoothGattDescriptor.ENABLE_INDICATION_VALUE)
+                        } else if (bleCharacteristic.properties and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0) {
+                            Log.d(TAG, "Property notify")
+                            gatt.writeDescriptor(bleDescriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+                        }
                     }
                     break
                 }
@@ -114,9 +139,8 @@ class Bluetooth(
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic,
         ) {
-            val characteristicValue = characteristic.value.toList().map { it.toUByte() }.toString()
-            Log.d(TAG, characteristicValue)
-            bleCharacteristicValue(characteristicValue)
+            val deviceAddress = gatt.device?.address
+            handleCharacteristicChanged(deviceAddress, characteristic.value)
             super.onCharacteristicChanged(gatt, characteristic)
         }
 
@@ -126,21 +150,32 @@ class Bluetooth(
             characteristic: BluetoothGattCharacteristic,
             value: ByteArray
         ) {
-            val characteristicValue = value.toList().map { it.toUByte() }.toString()
-            Log.d(TAG, characteristicValue)
-            bleCharacteristicValue(characteristicValue)
+            val deviceAddress = gatt.device?.address
+            handleCharacteristicChanged(deviceAddress, value)
             super.onCharacteristicChanged(gatt, characteristic, value)
+        }
+
+        private fun handleCharacteristicChanged(deviceAddress: String?, value: ByteArray) {
+            val characteristicValue = value.toList().map { it.toUByte() }.toString()
+            Log.d(TAG, "Characteristic changed for device: $deviceAddress with value: $characteristicValue")
+            if (deviceAddress != null) {
+                bleCharacteristicValue(deviceAddress, characteristicValue)
+            }
+            bleCharacteristicValue(deviceAddress ?: "", characteristicValue)
         }
     }
 
     @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.S)
     fun close() {
-        gatt?.disconnect()
-        gatt?.close()
+        gatt?.let {
+            it.disconnect()
+            it.close()
+        }
     }
 
     companion object {
         private const val TAG = "Bluetooth"
+        private const val PERMISSION_REQUEST_CODE = 1
     }
 }

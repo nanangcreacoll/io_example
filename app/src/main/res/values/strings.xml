@@ -13,6 +13,6 @@
     <string name="serial_send">SEND</string>
     <string name="serialValue">0 (Initial)</string>
     <string name="bluetooth">BLUETOOTH</string>
-    <string name="bluetoothValue">[0]</string>
     <string name="bluetoothStartButton">Start Scan</string>
+    <string name="bluetoothDeviceValue">Device:00:00:00:00:00:00\nValue:[0]\n</string>
 </resources>
