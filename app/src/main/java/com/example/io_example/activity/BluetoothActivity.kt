@@ -19,9 +19,9 @@ class BluetoothActivity : ComponentActivity() {
 
     // MAC address, service UUID, characteristic UUID, descriptor UUID
     private val bleList: List<List<String>> = listOf(
-        listOf("17:71:12:4E:C6:95", "0000ffe0-0000-1000-8000-00805f9b34fb", "0000ffe4-0000-1000-8000-00805f9b34fb", "00002902-0000-1000-8000-00805f9b34fb"), // Pulse Oximeter
-        listOf("64:FB:01:16:98:AE", "0000fff0-0000-1000-8000-00805f9b34fb", "0000fff1-0000-1000-8000-00805f9b34fb", "00002902-0000-1000-8000-00805f9b34fb"), // Weight Scale
-        listOf("C0:30:00:31:D7:B8", "00001810-0000-1000-8000-00805f9b34fb", "00002a35-0000-1000-8000-00805f9b34fb", "00002902-0000-1000-8000-00805f9b34fb") // Blood Pressure
+        listOf("17:71:12:4E:C6:95", "0000ffe0-0000-1000-8000-00805f9b34fb", "0000ffe4-0000-1000-8000-00805f9b34fb"), // Pulse Oximeter
+        listOf("64:FB:01:16:98:AE", "0000fff0-0000-1000-8000-00805f9b34fb", "0000fff1-0000-1000-8000-00805f9b34fb"), // Weight Scale
+        listOf("C0:30:00:31:D7:B8", "00001810-0000-1000-8000-00805f9b34fb", "00002a35-0000-1000-8000-00805f9b34fb") // Blood Pressure
     )
 
     @RequiresApi(Build.VERSION_CODES.S)

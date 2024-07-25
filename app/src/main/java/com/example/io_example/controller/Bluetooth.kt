@@ -25,6 +25,7 @@ class Bluetooth(
 
     private var manager: BluetoothManager = activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     private var gatt: BluetoothGatt? = null
+    private val descriptorUUID: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
     init {
         if (!manager.adapter.isEnabled) {
@@ -102,7 +103,7 @@ class Bluetooth(
                     Log.d(TAG, "Service discovered for device: ${gatt.device?.address}")
 
                     gatt.setCharacteristicNotification(bleCharacteristic, true)
-                    bleDescriptor = bleCharacteristic.getDescriptor(UUID.fromString(device[3]))
+                    bleDescriptor = bleCharacteristic.getDescriptor(descriptorUUID)
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                         if (bleCharacteristic.properties and BluetoothGattCharacteristic.PROPERTY_INDICATE != 0) {
                             Log.d(TAG, "Property indicate")
