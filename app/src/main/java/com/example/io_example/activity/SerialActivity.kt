@@ -18,7 +18,7 @@ class SerialActivity : ComponentActivity() {
     }
 
 //    private val serialPortPath = "/dev/ttyACM0" // arduino usb
-    private val serialPortPath = "/dev/ttyS3" // fatmor serial ttyS3
+    private val serialPortPath = "/dev/ttyS3" // rockchip serial UART ttyS3
     private val baudRate = 115200
     private lateinit var serialHelper: Serial
 

@@ -36,8 +36,4 @@ class I2c (bus: Int, address: Byte): Command() {
     private fun Byte.toHexString(): String {
         return String.format("%02X", this)
     }
-
-    private fun Int.toHexString(): String {
-        return String.format("%02X", this)
-    }
 }

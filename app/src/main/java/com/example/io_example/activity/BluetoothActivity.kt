@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.example.io_example.Bluetooth
+import com.example.io_example.controller.Bluetooth
 import com.example.io_example.R
 
 class BluetoothActivity : ComponentActivity() {
@@ -16,8 +16,9 @@ class BluetoothActivity : ComponentActivity() {
     private lateinit var bluetoothStartButton: Button
     private lateinit var bluetoothValueView: TextView
 
-    private val bleList = listOf(
-        listOf("17:71:12:4E:C6:95", "0000ffe0-0000-1000-8000-00805f9b34fb", "0000ffe4-0000-1000-8000-00805f9b34fb")
+    // MAC address, service UUID, characteristic UUID, notification descriptor UUID
+    private val bleList: List<List<String>> = listOf(
+        listOf("17:71:12:4E:C6:95", "0000ffe0-0000-1000-8000-00805f9b34fb", "0000ffe4-0000-1000-8000-00805f9b34fb", "00002902-0000-1000-8000-00805f9b34fb")
     )
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -29,10 +30,7 @@ class BluetoothActivity : ComponentActivity() {
         bluetoothStartButton = findViewById(R.id.bluetoothStartButton)
         bluetoothValueView = findViewById(R.id.bluetoothValueView)
 
-        requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 0)
-        requestPermissions(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION), 0)
-
-        bluetoothController = Bluetooth(applicationContext, bleList) { value ->
+        bluetoothController = Bluetooth(this, bleList) { value ->
             runOnUiThread { bluetoothValueView.text = value }
         }
 

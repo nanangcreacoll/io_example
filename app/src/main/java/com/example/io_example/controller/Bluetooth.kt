@@ -1,20 +1,26 @@
-package com.example.io_example
+package com.example.io_example.controller
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.bluetooth.*
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.util.*
 
 @SuppressLint("MissingPermission")
 class Bluetooth(
     private val context: Context,
     private val bleList: List<List<String>>,
-    private val onUpdate: (String) -> Unit
+    private val bleCharacteristicValue: (String) -> Unit
 ) {
 
     private var manager: BluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -22,7 +28,19 @@ class Bluetooth(
 
     init {
         if (!manager.adapter.isEnabled) {
-            manager.adapter.enable()
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            context.startActivity(enableBtIntent)
+        }
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                context as Activity,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 0
+            )
         }
     }
 
@@ -36,8 +54,8 @@ class Bluetooth(
     @RequiresApi(Build.VERSION_CODES.S)
     private inner class BleScanCallback : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
-            for (dt in bleList) {
-                if (result?.device?.address == dt[0]) {
+            for (device in bleList) {
+                if (result?.device?.address == device[0]) {
                     gatt = result.device.connectGatt(context, false, BleGattCallback())
                     break
                 }
@@ -63,19 +81,25 @@ class Bluetooth(
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-            for (dt in bleList) {
-                if (gatt?.device?.address == dt[0]) {
-                    bleCharacteristic = this@Bluetooth.gatt?.getService(UUID.fromString(dt[1]))?.getCharacteristic(UUID.fromString(dt[2]))
+            for (device in bleList) {
+                if (gatt?.device?.address == device[0]) {
+                    bleCharacteristic = this@Bluetooth.gatt
+                        ?.getService(UUID.fromString(device[1]))
+                        ?.getCharacteristic(UUID.fromString(device[2]))
                         ?: break
+                    Log.d(TAG, "Characteristic discovered for device: ${gatt.device?.address}")
+
+                    gatt.setCharacteristicNotification(bleCharacteristic, true)
+                    bleDescriptor = bleCharacteristic.getDescriptor(UUID.fromString(device[3]))
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                        bleDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                        gatt.writeDescriptor(bleDescriptor)
+                    } else {
+                        gatt.writeDescriptor(bleDescriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+                    }
+                    break
                 }
             }
-            Log.d(TAG, "Service discovered")
-            gatt!!.setCharacteristicNotification(bleCharacteristic, true)
-
-            bleDescriptor = bleCharacteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
-            bleDescriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-
-            gatt.writeDescriptor(bleDescriptor)
 
             super.onServicesDiscovered(gatt, status)
         }
@@ -85,11 +109,27 @@ class Bluetooth(
             super.onDescriptorWrite(gatt, descriptor, status)
         }
 
-        override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
-            val value = characteristic.value.toList().map { it.toUByte() }.toString()
-            Log.d(TAG, value)
-            onUpdate(value)
+        @Deprecated("Deprecated in Java")
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+        ) {
+            val characteristicValue = characteristic.value.toList().map { it.toUByte() }.toString()
+            Log.d(TAG, characteristicValue)
+            bleCharacteristicValue(characteristicValue)
             super.onCharacteristicChanged(gatt, characteristic)
+        }
+
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+            value: ByteArray
+        ) {
+            val characteristicValue = value.toList().map { it.toUByte() }.toString()
+            Log.d(TAG, characteristicValue)
+            bleCharacteristicValue(characteristicValue)
+            super.onCharacteristicChanged(gatt, characteristic, value)
         }
     }
 

@@ -73,32 +73,4 @@ open class Command {
         errorReader.close()
         Log.e(TAG, "Error executing command: $command\n$errorMessage")
     }
-
-    fun executeCommandUntilSuccess(command: String, args: String = "") {
-        while (true) {
-            try {
-                executeRootCommand(command, args)
-                Log.d(TAG, "Command executed successfully: $command $args")
-                break
-            } catch (e: IOException) {
-                Log.d(TAG, "Retrying command: $command $args")
-                // Add a delay if necessary to avoid tight loop
-                Thread.sleep(1000)
-            }
-        }
-    }
-
-    fun readCommandUntilSuccess(command: String, args: String = ""): String {
-        while (true) {
-            try {
-                val result = readRootCommand(command, args)
-                Log.d(TAG, "Command executed successfully: $command $args")
-                return result
-            } catch (e: IOException) {
-                Log.d(TAG, "Retrying command: $command $args")
-                // Add a delay if necessary to avoid tight loop
-                Thread.sleep(1000)
-            }
-        }
-    }
 }

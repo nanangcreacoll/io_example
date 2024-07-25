@@ -10,10 +10,6 @@ import com.example.io_example.R
 import com.example.io_example.service.RestartService
 
 class MainActivity : ComponentActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
     private lateinit var gpioButton: Button
     private lateinit var i2cButton: Button
     private lateinit var serialButton: Button
