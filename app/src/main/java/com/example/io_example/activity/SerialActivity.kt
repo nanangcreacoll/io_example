@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.io_example.controller.Serial
 import com.example.io_example.ui.theme.Io_exampleTheme
 import com.example.io_example.R
+import com.example.io_example.ui.theme.LightGreen
 import java.io.IOException
 import java.security.InvalidParameterException
 
@@ -138,7 +139,7 @@ fun SerialScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7))
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen)
         ) {
             Text(
                 text = serialSendText,

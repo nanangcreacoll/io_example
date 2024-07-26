@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.io_example.controller.Gpio
 import com.example.io_example.R
+import com.example.io_example.ui.theme.Green
+import com.example.io_example.ui.theme.Grey
 import com.example.io_example.ui.theme.Io_exampleTheme
+import com.example.io_example.ui.theme.Red
 
 class GpioActivity : ComponentActivity() {
     private val whiteLedPin = 11 // GPIO0_B3
@@ -87,7 +90,7 @@ fun GpioScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF787878))
+            colors = ButtonDefaults.buttonColors(containerColor = Grey)
         ) {
             Text(
                 text = whiteLedText,
@@ -103,7 +106,7 @@ fun GpioScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6FFF52))
+            colors = ButtonDefaults.buttonColors(containerColor = Green)
         ) {
             Text(
                 text = greenLedText,
@@ -119,7 +122,7 @@ fun GpioScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFD6666))
+            colors = ButtonDefaults.buttonColors(containerColor = Red)
         ) {
             Text(
                 text = redLedText,

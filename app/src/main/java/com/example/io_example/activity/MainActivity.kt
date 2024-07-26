@@ -18,10 +18,10 @@ import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.getString
 import com.example.io_example.service.RestartService
 import com.example.io_example.R
 import com.example.io_example.ui.theme.Io_exampleTheme
+import com.example.io_example.ui.theme.LightGreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +82,7 @@ fun MainScreen(
 
         Button(
             onClick = onGpioClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7)),
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
             modifier = Modifier
                 .width(220.dp)
                 .height(70.dp)
@@ -98,7 +98,7 @@ fun MainScreen(
 
         Button(
             onClick = onI2cClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7)),
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
             modifier = Modifier
                 .width(220.dp)
                 .height(70.dp)
@@ -114,7 +114,7 @@ fun MainScreen(
 
         Button(
             onClick = onSerialClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7)),
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
             modifier = Modifier
                 .width(220.dp)
                 .height(70.dp)
@@ -130,7 +130,7 @@ fun MainScreen(
 
         Button(
             onClick = onBluetoothClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7)),
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
             modifier = Modifier
                 .width(220.dp)
                 .height(70.dp)

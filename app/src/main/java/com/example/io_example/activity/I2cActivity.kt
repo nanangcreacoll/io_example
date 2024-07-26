@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.io_example.controller.I2c
 import com.example.io_example.R
 import com.example.io_example.ui.theme.Io_exampleTheme
+import com.example.io_example.ui.theme.LightGreen
 
 class I2cActivity : ComponentActivity() {
     private val i2cBus: Int = 4
@@ -102,7 +103,7 @@ fun I2cScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7))
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen)
         ) {
             Text(
                 text = i2cWriteText,
@@ -118,7 +119,7 @@ fun I2cScreen(
                 .width(220.dp)
                 .height(70.dp)
                 .padding(vertical = 4.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB5FBA7))
+            colors = ButtonDefaults.buttonColors(containerColor = LightGreen)
         ) {
             Text(
                 text = i2cReadText,
