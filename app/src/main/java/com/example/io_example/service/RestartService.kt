@@ -36,4 +36,9 @@ class RestartService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
+
+    override fun onDestroy() {
+        Log.d(TAG, "RestartService destroyed")
+        super.onDestroy()
+    }
 }
